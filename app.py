@@ -1169,3 +1169,60 @@ def icon(filename):
 @developer_required
 
 def my_apps(developer):
+
+    db = get_db()
+
+
+    rows = db.execute(
+        """
+        SELECT *
+        FROM apps
+        WHERE developer_id = ?
+        ORDER BY created_at DESC
+        """,
+        (developer["id"],)
+    ).fetchall()
+
+
+    db.close()
+
+
+    return jsonify({
+
+        "success": True,
+
+        "apps": [
+
+            {
+
+                "id": row["id"],
+
+                "name": row["name"],
+
+                "category":
+                    row["category"],
+
+                "version":
+                    row["version"],
+
+                "status":
+                    row["status"],
+
+                "downloads":
+                    row["downloads"],
+
+                "created_at":
+                    row["created_at"],
+
+                "updated_at":
+                    row["updated_at"]
+
+            }
+
+            for row in rows
+
+        ]
+
+    })
+
+
