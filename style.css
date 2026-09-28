@@ -1,4 +1,4 @@
-* {
+h* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -716,6 +716,449 @@ footer small {
 
   .developer-visual {
     width: 100%;
+  }
+
+}
+
+/* ======================================================
+   ADMIN DASHBOARD
+====================================================== */
+
+.admin-login-card {
+
+  margin-bottom: 40px;
+
+  padding: 24px;
+
+  border: 1px solid rgba(
+    40,
+    130,
+    255,
+    0.25
+  );
+
+  border-radius: 18px;
+
+  background:
+    rgba(
+      10,
+      15,
+      28,
+      0.82
+    );
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 24px;
+
+}
+
+
+.admin-login-card strong {
+
+  font-size: 17px;
+
+}
+
+
+.admin-login-card p {
+
+  margin: 7px 0 0;
+
+  color: #8994a8;
+
+  font-size: 13px;
+
+}
+
+
+.admin-key-row {
+
+  display: flex;
+
+  gap: 10px;
+
+  min-width: 390px;
+
+}
+
+
+.admin-key-row input {
+
+  flex: 1;
+
+}
+
+
+/* ======================================================
+   PENDING APPLICATION
+====================================================== */
+
+.pending-apps {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+
+}
+
+
+.pending-app-card {
+
+  padding: 22px;
+
+  border: 1px solid rgba(
+    255,
+    255,
+    255,
+    0.08
+  );
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(16, 23, 40, 0.95),
+      rgba(7, 10, 18, 0.95)
+    );
+
+  transition:
+    transform .2s ease,
+    border-color .2s ease;
+
+}
+
+
+.pending-app-card:hover {
+
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(
+      40,
+      130,
+      255,
+      0.35
+    );
+
+}
+
+
+.pending-app-main {
+
+  display: flex;
+
+  gap: 18px;
+
+}
+
+
+.pending-app-icon {
+
+  width: 64px;
+
+  height: 64px;
+
+  min-width: 64px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #101a31,
+      #07101f
+    );
+
+  font-size: 29px;
+
+}
+
+
+.pending-app-info {
+
+  flex: 1;
+
+}
+
+
+.pending-title-row {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+
+}
+
+
+.pending-title-row h3 {
+
+  margin: 0;
+
+  font-size: 20px;
+
+}
+
+
+.pending-description {
+
+  margin: 9px 0;
+
+  color: #9aa6bb;
+
+  line-height: 1.5;
+
+}
+
+
+.pending-meta {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 15px;
+
+  color: #707d93;
+
+  font-size: 12px;
+
+}
+
+
+.pending-meta strong {
+
+  color: #c8d0df;
+
+}
+
+
+.pending-actions {
+
+  margin-top: 20px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(
+    255,
+    255,
+    255,
+    0.07
+  );
+
+  display: flex;
+
+  gap: 10px;
+
+  justify-content: flex-end;
+
+}
+
+
+.approve-button,
+.reject-button {
+
+  border: 0;
+
+  padding: 11px 20px;
+
+  border-radius: 10px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    opacity .2s ease;
+
+}
+
+
+.approve-button {
+
+  background:
+    rgba(
+      30,
+      190,
+      120,
+      0.15
+    );
+
+  color: #55e3a4;
+
+  border: 1px solid
+    rgba(
+      30,
+      190,
+      120,
+      0.3
+    );
+
+}
+
+
+.reject-button {
+
+  background:
+    rgba(
+      240,
+      70,
+      90,
+      0.12
+    );
+
+  color: #ff7f91;
+
+  border: 1px solid
+    rgba(
+      240,
+      70,
+      90,
+      0.3
+    );
+
+}
+
+
+.approve-button:hover,
+.reject-button:hover {
+
+  transform: translateY(-1px);
+
+  opacity: .85;
+
+}
+
+
+.status {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+}
+
+
+.status-pending {
+
+  color: #ffd66b;
+
+  background:
+    rgba(
+      255,
+      190,
+      40,
+      0.1
+    );
+
+}
+
+
+.status-approved {
+
+  color: #58e5a5;
+
+  background:
+    rgba(
+      30,
+      190,
+      120,
+      0.1
+    );
+
+}
+
+
+.status-rejected {
+
+  color: #ff788b;
+
+  background:
+    rgba(
+      240,
+      70,
+      90,
+      0.1
+    );
+
+}
+
+
+/* ======================================================
+   MOBILE ADMIN
+====================================================== */
+
+@media (
+  max-width: 700px
+) {
+
+  .admin-login-card {
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+  }
+
+
+  .admin-key-row {
+
+    min-width: 0;
+
+    width: 100%;
+
+    flex-direction: column;
+
+  }
+
+
+  .pending-app-main {
+
+    flex-direction: column;
+
+  }
+
+
+  .pending-actions {
+
+    justify-content: stretch;
+
+  }
+
+
+  .approve-button,
+  .reject-button {
+
+    flex: 1;
+
   }
 
 }
