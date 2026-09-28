@@ -852,3 +852,143 @@
 
 </body>
 </html>
+
+<button
+  id="adminNavButton"
+  class="nav-button"
+  onclick="showAdmin()"
+>
+  Admin
+</button>
+
+<!-- ======================================================
+     ADMIN DASHBOARD
+====================================================== -->
+
+<section
+  id="adminDashboard"
+  class="dashboard hidden"
+>
+
+  <div class="dashboard-header">
+
+    <div>
+
+      <small>
+        SOV DEV HUB ADMIN
+      </small>
+
+      <h2>
+        Application Review
+      </h2>
+
+      <p>
+        Review developer applications before they become
+        publicly available.
+      </p>
+
+    </div>
+
+    <button
+      class="secondary-button"
+      onclick="loadPendingApps()"
+    >
+      ↻ Refresh
+    </button>
+
+  </div>
+
+
+  <!-- ADMIN KEY -->
+
+  <div class="admin-login-card">
+
+    <div>
+
+      <strong>
+        Admin Verification
+      </strong>
+
+      <p>
+        Enter the Admin Key configured on your backend.
+        It is never stored in this page's source code.
+      </p>
+
+    </div>
+
+
+    <div class="admin-key-row">
+
+      <input
+        id="adminKey"
+        type="password"
+        placeholder="Enter Admin Key"
+        autocomplete="off"
+      >
+
+      <button
+        class="primary-button"
+        onclick="loadPendingApps()"
+      >
+        Verify
+      </button>
+
+    </div>
+
+
+    <div
+      id="adminMessage"
+      class="form-message"
+    ></div>
+
+  </div>
+
+
+  <!-- PENDING APPLICATIONS -->
+
+  <div class="section-heading">
+
+    <div>
+
+      <small>
+        MODERATION
+      </small>
+
+      <h2>
+        Pending Applications
+      </h2>
+
+    </div>
+
+    <span id="pendingCount">
+      0 pending
+    </span>
+
+  </div>
+
+
+  <div
+    id="pendingApps"
+    class="pending-apps"
+  >
+
+    <div class="empty-state">
+
+      <div class="empty-icon">
+        🛡️
+      </div>
+
+      <strong>
+        Admin verification required
+      </strong>
+
+      <p>
+        Enter your Admin Key above to load pending
+        applications.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
