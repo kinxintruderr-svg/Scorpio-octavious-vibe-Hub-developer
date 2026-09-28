@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SOV Dev Hub</title>
+
+  <meta
+    name="description"
+    content="Scorpio Octavious Vibe Developer Hub"
+  >
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="background background-one"></div>
+<div class="background background-two"></div>
+
+
+<!-- ======================================================
+     NAVIGATION
+====================================================== -->
+
+<header class="navbar">
+
+  <a class="brand" href="#home">
+
+    <div class="brand-logo">
+      🦂
+    </div>
+
+    <div class="brand-text">
+      <strong>SOV</strong>
+      <span>DEV HUB</span>
+    </div>
+
+  </a>
+
+
+  <nav class="desktop-nav">
+
+    <a href="#home">Home</a>
+
+    <a href="#apps">Apps</a>
+
+    <a href="#developers">Developers</a>
+
+  </nav>
+
+
+  <div class="nav-actions">
+
+    <button
+      id="loginNavButton"
+      class="nav-button"
+      onclick="openAuth('login')"
+    >
+      Login
+    </button>
+
+    <button
+      id="dashboardNavButton"
+      class="nav-button hidden"
+      onclick="showDashboard()"
+    >
+      Dashboard
+    </button>
+
+    <button
+      id="logoutNavButton"
+      class="nav-button hidden"
+      onclick="logout()"
+    >
+      Logout
+    </button>
+
+  </div>
+
+</header>
+
+
+<!-- ======================================================
+     HOME
+====================================================== -->
+
+<main id="home">
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <div class="hero-badge">
+      🚀 BUILD • PUBLISH • GROW
+    </div>
+
+    <h1>
+      Discover apps.
+      <span>Build the future.</span>
+    </h1>
+
+    <p>
+      SOV Dev Hub gives developers a place to publish
+      Android applications and gives users a place to
+      discover and download them.
+    </p>
+
+
+    <div class="hero-actions">
+
+      <button
+        class="primary-button"
+        onclick="scrollToApps()"
+      >
+        Explore Apps
+      </button>
+
+      <button
+        class="secondary-button"
+        onclick="openAuth('register')"
+      >
+        Become a Developer
+      </button>
+
+    </div>
+
+
+    <div class="stats">
+
+      <div>
+        <strong id="totalApps">0</strong>
+        <span>Published Apps</span>
+      </div>
+
+      <div>
+        <strong id="totalDownloads">0</strong>
+        <span>Total Downloads</span>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="hero-card">
+
+    <div class="hero-card-glow"></div>
+
+    <div class="hero-icon">
+      🦂
+    </div>
+
+    <span class="featured-label">
+      SOV DEV HUB
+    </span>
+
+    <h2>
+      Your app.
+      Your audience.
+    </h2>
+
+    <p>
+      Upload, publish and grow your application.
+    </p>
+
+    <button
+      class="primary-button full"
+      onclick="openAuth('register')"
+    >
+      Start Publishing
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     SEARCH
+====================================================== -->
+
+<section class="search-section">
+
+  <div class="search-box">
+
+    <span>🔎</span>
+
+    <input
+      id="searchInput"
+      type="search"
+      placeholder="Search apps or developers..."
+      autocomplete="off"
+    >
+
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     CATEGORIES
+====================================================== -->
+
+<section class="content-section">
+
+  <div class="section-heading">
+
+    <div>
+
+      <small>EXPLORE</small>
+
+      <h2>
+        Categories
+      </h2>
+
+    </div>
+
+  </div>
+
+
+  <div class="categories">
+
+    <button
+      class="category active"
+      data-category=""
+    >
+      All
+    </button>
+
+    <button
+      class="category"
+      data-category="Social"
+    >
+      👥 Social
+    </button>
+
+    <button
+      class="category"
+      data-category="Games"
+    >
+      🎮 Games
+    </button>
+
+    <button
+      class="category"
+      data-category="Finance"
+    >
+      💰 Finance
+    </button>
+
+    <button
+      class="category"
+      data-category="Entertainment"
+    >
+      🎬 Entertainment
+    </button>
+
+    <button
+      class="category"
+      data-category="Tools"
+    >
+      🛠 Tools
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     APPS
+====================================================== -->
+
+<section
+  id="apps"
+  class="content-section"
+>
+
+  <div class="section-heading">
+
+    <div>
+
+      <small>MARKETPLACE</small>
+
+      <h2>
+        Published Apps
+      </h2>
+
+    </div>
+
+    <span id="appStatus">
+      Loading...
+    </span>
+
+  </div>
+
+
+  <div
+    id="appGrid"
+    class="app-grid"
+  >
+
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     DEVELOPERS
+====================================================== -->
+
+<section
+  id="developers"
+  class="developer-banner"
+>
+
+  <div>
+
+    <small>
+      FOR DEVELOPERS
+    </small>
+
+    <h2>
+      Have an app?
+      <span>Publish it.</span>
+    </h2>
+
+    <p>
+      Create your developer account and upload your APK.
+      Your app will be reviewed before becoming publicly
+      available.
+    </p>
+
+    <button
+      class="primary-button"
+      onclick="openAuth('register')"
+    >
+      Create Developer Account
+    </button>
+
+  </div>
+
+
+  <div class="developer-symbol">
+    ↑
+  </div>
+
+</section>
+
+
+<!-- ======================================================
+     DEVELOPER DASHBOARD
+====================================================== -->
+
+<section
+  id="dashboard"
+  class="dashboard hidden"
+>
+
+  <div class="dashboard-header">
+
+    <div>
+
+      <small>
+        DEVELOPER CENTER
+      </small>
+
+      <h2>
+        Developer Dashboard
+      </h2>
+
+      <p id="developerWelcome">
+      </p>
+
+    </div>
+
+
+    <button
+      class="primary-button"
+      onclick="openUpload()"
+    >
+      + Upload App
+    </button>
+
+  </div>
+
+
+  <div class="dashboard-stats">
+
+    <div class="dashboard-stat">
+
+      <span>My Apps</span>
+
+      <strong id="myAppCount">
+        0
+      </strong>
+
+    </div>
+
+
+    <div class="dashboard-stat">
+
+      <span>Total Downloads</span>
+
+      <strong id="myDownloadCount">
+        0
+      </strong>
+
+    </div>
+
+  </div>
+
+
+  <div class="my-apps">
+
+    <div class="section-heading">
+
+      <div>
+
+        <small>
+          APPLICATIONS
+        </small>
+
+        <h2>
+          My Apps
+        </h2>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="myAppsGrid"
+      class="my-apps-grid"
+    >
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- ======================================================
+     AUTH MODAL
+====================================================== -->
+
+<div
+  id="authModal"
+  class="modal"
+>
+
+  <div class="modal-card">
+
+    <button
+      class="close-modal"
+      onclick="closeAuth()"
+    >
+      ×
+    </button>
+
+
+    <div class="modal-logo">
+      🦂
+    </div>
+
+
+    <div id="loginPanel">
+
+      <small>
+        DEVELOPER ACCOUNT
+      </small>
+
+      <h2>
+        Welcome back
+      </h2>
+
+      <p class="modal-description">
+        Sign in to manage your applications.
+      </p>
+
+
+      <form id="loginForm">
+
+        <label>
+          Username or Email
+        </label>
+
+        <input
+          id="loginUsername"
+          required
+          autocomplete="username"
+        >
+
+
+        <label>
+          Password
+        </label>
+
+        <input
+          id="loginPassword"
+          type="password"
+          required
+          autocomplete="current-password"
+        >
+
+
+        <button
+          class="primary-button full"
+          type="submit"
+        >
+          Login
+        </button>
+
+      </form>
+
+
+      <p class="switch-auth">
+        Don't have an account?
+
+        <button
+          onclick="switchAuth('register')"
+        >
+          Create one
+        </button>
+
+      </p>
+
+    </div>
+
+
+    <div
+      id="registerPanel"
+      class="hidden"
+    >
+
+      <small>
+        DEVELOPER ACCOUNT
+      </small>
+
+      <h2>
+        Create account
+      </h2>
+
+      <p class="modal-description">
+        Start publishing your apps on SOV Dev Hub.
+      </p>
+
+
+      <form id="registerForm">
+
+        <label>
+          Username
+        </label>
+
+        <input
+          id="registerUsername"
+          required
+          autocomplete="username"
+        >
+
+
+        <label>
+          Display Name
+        </label>
+
+        <input
+          id="registerDisplayName"
+          required
+        >
+
+
+        <label>
+          Email
+        </label>
+
+        <input
+          id="registerEmail"
+          type="email"
+          required
+          autocomplete="email"
+        >
+
+
+        <label>
+          Password
+        </label>
+
+        <input
+          id="registerPassword"
+          type="password"
+          minlength="8"
+          required
+          autocomplete="new-password"
+        >
+
+
+        <button
+          class="primary-button full"
+          type="submit"
+        >
+          Create Developer Account
+        </button>
+
+      </form>
+
+
+      <p class="switch-auth">
+
+        Already registered?
+
+        <button
+          onclick="switchAuth('login')"
+        >
+          Login
+        </button>
+
+      </p>
+
+    </div>
+
+
+    <div
+      id="authMessage"
+      class="form-message"
+    ></div>
+
+  </div>
+
+</div>
+
+
+<!-- ======================================================
+     UPLOAD MODAL
+====================================================== -->
+
+<div
+  id="uploadModal"
+  class="modal"
+>
+
+  <div class="modal-card upload-card">
+
+    <button
+      class="close-modal"
+      onclick="closeUpload()"
+    >
+      ×
+    </button>
+
+
+    <div class="modal-logo">
+      📱
+    </div>
+
+
+    <small>
+      DEVELOPER CENTER
+    </small>
+
+    <h2>
+      Upload Your App
+    </h2>
+
+    <p class="modal-description">
+      Your APK will be submitted for admin review.
+    </p>
+
+
+    <form id="uploadForm">
+
+      <label>
+        App Name
+      </label>
+
+      <input
+        id="uploadName"
+        required
+        maxlength="100"
+      >
+
+
+      <label>
+        Description
+      </label>
+
+      <textarea
+        id="uploadDescription"
+        required
+        maxlength="2000"
+      ></textarea>
+
+
+      <label>
+        Category
+      </label>
+
+      <select
+        id="uploadCategory"
+        required
+      >
+
+        <option value="">
+          Select category
+        </option>
+
+        <option value="Social">
+          Social
+        </option>
+
+        <option value="Games">
+          Games
+        </option>
+
+        <option value="Finance">
+          Finance
+        </option>
+
+        <option value="Entertainment">
+          Entertainment
+        </option>
+
+        <option value="Tools">
+          Tools
+        </option>
+
+      </select>
+
+
+      <label>
+        Version
+      </label>
+
+      <input
+        id="uploadVersion"
+        placeholder="1.0.0"
+        required
+      >
+
+
+      <label>
+        APK File
+      </label>
+
+      <input
+        id="uploadApk"
+        type="file"
+        accept=".apk"
+        required
+      >
+
+      <p class="file-help">
+        Maximum size: 200 MB
+      </p>
+
+
+      <label>
+        App Icon
+      </label>
+
+      <input
+        id="uploadIcon"
+        type="file"
+        accept=".png,.jpg,.jpeg,.webp"
+      >
+
+
+      <button
+        id="uploadSubmit"
+        class="primary-button full"
+        type="submit"
+      >
+        Submit App For Review
+      </button>
+
+
+      <div
+        id="uploadMessage"
+        class="form-message"
+      ></div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<!-- ======================================================
+     APP DETAILS MODAL
+====================================================== -->
+
+<div
+  id="appModal"
+  class="modal"
+>
+
+  <div class="modal-card app-detail-card">
+
+    <button
+      class="close-modal"
+      onclick="closeAppDetails()"
+    >
+      ×
+    </button>
+
+
+    <div
+      id="appDetails"
+    >
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ======================================================
+     TOAST
+====================================================== -->
+
+<div
+  id="toast"
+  class="toast"
+></div>
+
+
+<footer>
+
+  <div class="footer-logo">
+    🦂 SOV DEV HUB
+  </div>
+
+  <p>
+    Scorpio Octavious Vibe Developer Platform
+  </p>
+
+  <small>
+    © 2026 Scorpio Octavious Vibe
+  </small>
+
+</footer>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>
