@@ -19,7 +19,7 @@ Do NOT put secret admin keys in this file.
 
 const API_BASE =
   localStorage.getItem("sov_api_url") ||
-  "http://localhost:5000";
+  "https://scorpio-octavious-vibe-hub-developer.onrender.com";
 
 
 let currentCategory = "";
