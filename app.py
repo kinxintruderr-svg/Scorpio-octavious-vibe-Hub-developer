@@ -1225,4 +1225,45 @@ def my_apps(developer):
 
     })
 
+# ============================================================
+# ADMIN AUTH
+# ============================================================
+
+def admin_required(function):
+
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+
+        supplied = request.headers.get(
+            "X-Admin-Key",
+            ""
+        )
+
+
+        if not supplied:
+
+            return jsonify({
+                "success": False,
+                "error": "Admin authentication required"
+            }), 401
+
+
+        if not secrets.compare_digest(
+            supplied,
+            ADMIN_KEY
+        ):
+
+            return jsonify({
+                "success": False,
+                "error": "Invalid admin key"
+            }), 403
+
+
+        return function(
+            *args,
+            **kwargs
+        )
+
+
+    return wrapper
 
