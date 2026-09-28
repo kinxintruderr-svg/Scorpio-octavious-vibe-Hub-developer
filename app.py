@@ -1267,3 +1267,134 @@ def admin_required(function):
 
     return wrapper
 
+# ============================================================
+# ADMIN — APPROVE / REJECT
+# ============================================================
+
+@app.post("/api/admin/apps/<int:app_id>/status")
+
+@admin_required
+
+def change_app_status(app_id):
+
+    data = request.get_json(
+        silent=True
+    ) or {}
+
+
+    status = data.get(
+        "status"
+    )
+
+
+    if status not in {
+        "approved",
+        "rejected"
+    }:
+
+        return jsonify({
+            "success": False,
+            "error":
+            "Status must be approved or rejected"
+        }), 400
+
+
+    db = get_db()
+
+
+    cursor = db.execute(
+        """
+        UPDATE apps
+        SET status = ?,
+            updated_at = ?
+        WHERE id = ?
+        """,
+        (
+            status,
+            now(),
+            app_id
+        )
+    )
+
+
+    db.commit()
+
+
+    changed = cursor.rowcount
+
+
+    db.close()
+
+
+    if not changed:
+
+        return jsonify({
+            "success": False,
+            "error": "App not found"
+        }), 404
+
+
+    return jsonify({
+
+        "success": True,
+
+        "message":
+            "App status updated",
+
+        "status": status
+
+    })
+
+
+# ============================================================
+# ERROR HANDLERS
+# ============================================================
+
+@app.errorhandler(413)
+
+def too_large(error):
+
+    return jsonify({
+
+        "success": False,
+
+        "error":
+            "File is too large. Maximum APK size is 200 MB."
+
+    }), 413
+
+
+@app.errorhandler(500)
+
+def server_error(error):
+
+    return jsonify({
+
+        "success": False,
+
+        "error":
+            "Internal server error"
+
+    }), 500
+
+
+# ============================================================
+# START
+# ============================================================
+
+if __name__ == "__main__":
+
+    port = int(
+        os.environ.get(
+            "PORT",
+            "5000"
+        )
+    )
+
+
+    app.run(
+        host="0.0.0.0",
+        port=port,
+        debug=False
+    )
+
