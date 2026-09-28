@@ -346,3 +346,427 @@ document
     }
 
   });
+
+/* ======================================================
+   ADMIN DASHBOARD
+====================================================== */
+
+function showAdmin() {
+
+  const dashboard =
+    document.getElementById(
+      "adminDashboard"
+    );
+
+  dashboard.classList.remove(
+    "hidden"
+  );
+
+  dashboard.scrollIntoView({
+    behavior: "smooth"
+  });
+
+}
+
+
+
+/* ======================================================
+   LOAD PENDING APPS
+====================================================== */
+
+async function loadPendingApps() {
+
+  const key =
+    document
+      .getElementById(
+        "adminKey"
+      )
+      .value
+      .trim();
+
+
+  const message =
+    document.getElementById(
+      "adminMessage"
+    );
+
+
+  const container =
+    document.getElementById(
+      "pendingApps"
+    );
+
+
+  if (!key) {
+
+    message.textContent =
+      "Enter your Admin Key.";
+
+    return;
+
+  }
+
+
+  container.innerHTML = `
+    <div class="loading">
+      Verifying admin access...
+    </div>
+  `;
+
+
+  message.textContent =
+    "";
+
+
+  try {
+
+    const data =
+      await api(
+        "/api/admin/apps/pending",
+        {
+
+          headers: {
+
+            "X-Admin-Key":
+              key
+
+          }
+
+        }
+      );
+
+
+    const apps =
+      data.apps || [];
+
+
+    document.getElementById(
+      "pendingCount"
+    ).textContent =
+      apps.length +
+      (
+        apps.length === 1
+          ? " pending"
+          : " pending"
+      );
+
+
+    message.textContent =
+      "✓ Admin access verified.";
+
+
+    renderPendingApps(
+      apps
+    );
+
+
+  } catch (error) {
+
+    container.innerHTML = `
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          🔒
+        </div>
+
+        <strong>
+          Admin verification failed
+        </strong>
+
+        <p>
+          ${escapeHTML(
+            error.message
+          )}
+        </p>
+
+      </div>
+    `;
+
+
+    message.textContent =
+      error.message;
+
+  }
+
+}
+
+
+
+/* ======================================================
+   RENDER PENDING APPS
+====================================================== */
+
+function renderPendingApps(
+  apps
+) {
+
+  const container =
+    document.getElementById(
+      "pendingApps"
+    );
+
+
+  if (!apps.length) {
+
+    container.innerHTML = `
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          ✅
+        </div>
+
+        <strong>
+          No pending applications
+        </strong>
+
+        <p>
+          All submitted applications have been reviewed.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    apps.map(
+      app => `
+
+        <article
+          class="pending-app-card"
+          id="pending-app-${Number(app.id)}"
+        >
+
+          <div class="pending-app-main">
+
+            <div class="pending-app-icon">
+              📱
+            </div>
+
+
+            <div class="pending-app-info">
+
+              <div class="pending-title-row">
+
+                <h3>
+                  ${escapeHTML(
+                    app.name
+                  )}
+                </h3>
+
+                <span class="status status-pending">
+                  pending
+                </span>
+
+              </div>
+
+
+              <p class="pending-description">
+                ${escapeHTML(
+                  app.description
+                )}
+              </p>
+
+
+              <div class="pending-meta">
+
+                <span>
+                  Category:
+                  <strong>
+                    ${escapeHTML(
+                      app.category
+                    )}
+                  </strong>
+                </span>
+
+
+                <span>
+                  Version:
+                  <strong>
+                    ${escapeHTML(
+                      app.version
+                    )}
+                  </strong>
+                </span>
+
+
+                <span>
+                  Developer:
+                  <strong>
+                    ${escapeHTML(
+                      app.developer
+                    )}
+                  </strong>
+                </span>
+
+
+                <span>
+                  Submitted:
+                  <strong>
+                    ${formatDate(
+                      app.created_at
+                    )}
+                  </strong>
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="pending-actions">
+
+            <button
+              class="approve-button"
+              onclick="reviewApp(
+                ${Number(app.id)},
+                'approved'
+              )"
+            >
+              ✓ Approve
+            </button>
+
+
+            <button
+              class="reject-button"
+              onclick="reviewApp(
+                ${Number(app.id)},
+                'rejected'
+              )"
+            >
+              ✕ Reject
+            </button>
+
+          </div>
+
+        </article>
+
+      `
+    ).join("");
+
+}
+
+
+
+/* ======================================================
+   APPROVE / REJECT APP
+====================================================== */
+
+async function reviewApp(
+  appId,
+  status
+) {
+
+  const key =
+    document
+      .getElementById(
+        "adminKey"
+      )
+      .value
+      .trim();
+
+
+  const message =
+    document.getElementById(
+      "adminMessage"
+    );
+
+
+  if (!key) {
+
+    message.textContent =
+      "Admin Key required.";
+
+    return;
+
+  }
+
+
+  const action =
+    status === "approved"
+      ? "approve"
+      : "reject";
+
+
+  if (
+    !confirm(
+      `Are you sure you want to ${action} this application?`
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  try {
+
+    const data =
+      await api(
+        "/api/admin/apps/" +
+        encodeURIComponent(
+          appId
+        ) +
+        "/status",
+        {
+
+          method: "POST",
+
+          headers: {
+
+            "Content-Type":
+              "application/json",
+
+            "X-Admin-Key":
+              key
+
+          },
+
+          body: JSON.stringify({
+
+            status:
+              status
+
+          })
+
+        }
+      );
+
+
+    showToast(
+      data.message ||
+      (
+        status === "approved"
+          ? "Application approved."
+          : "Application rejected."
+      )
+    );
+
+
+    await loadPendingApps();
+
+
+    /*
+     * Refresh public applications too.
+     * An approved app should now appear
+     * in the public marketplace.
+     */
+
+    await loadApps();
+
+
+  } catch (error) {
+
+    message.textContent =
+      error.message;
+
+  }
+
+}
