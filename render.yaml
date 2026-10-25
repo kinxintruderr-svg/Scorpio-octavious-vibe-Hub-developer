@@ -1,0 +1,16 @@
+
+services:
+  - type: web
+    name: sov-develop-hub-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    healthCheckPath: /health
+    envVars:
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: ADMIN_EMAIL
+        value: kinxintruder@gmail.com
+      - key: FRONTEND_ORIGIN
+        sync: false
