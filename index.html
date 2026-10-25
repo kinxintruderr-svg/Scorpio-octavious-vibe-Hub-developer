@@ -1,0 +1,491 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070b14">
+  <title>SOV Develop Hub | Scorpio Octavious Vibe</title>
+  <style>
+    :root {
+      --bg:#070b14; --panel:#101a2b; --blue:#087bff;
+      --light:#45b6ff; --text:#f3f7ff; --muted:#9eafc9;
+      --border:#263c5a; --green:#4bdda0; --red:#ff7b89;
+    }
+    * { box-sizing:border-box }
+    body {
+      margin:0; background:radial-gradient(ellipse at top,#10264a,var(--bg) 55%);
+      color:var(--text); font-family:Arial,Helvetica,sans-serif; line-height:1.5;
+    }
+    header {
+      background:#070b14ed; border-bottom:1px solid var(--border);
+      padding:15px 0; position:sticky; top:0; z-index:5;
+    }
+    .wrap { width:min(1100px,92%); margin:auto }
+    .nav { display:flex; justify-content:space-between; align-items:center; gap:15px; flex-wrap:wrap }
+    .brand { display:flex; align-items:center; gap:12px }
+    .logo {
+      display:grid; place-items:center; width:48px; height:48px;
+      border-radius:14px; background:linear-gradient(135deg,#061b38,#087bff);
+      border:1px solid var(--light); font-size:25px;
+    }
+    h1,h2,h3,p { margin-top:0 }
+    h1 { font-size:19px; margin-bottom:2px }
+    .muted, .brand p { color:var(--muted) }
+    .brand p { margin:0; font-size:13px }
+    main { padding:28px 0 50px }
+    .hero,.panel,.app-card {
+      background:linear-gradient(145deg,#111e32,#0b1220);
+      border:1px solid var(--border); border-radius:18px;
+    }
+    .hero { padding:clamp(22px,5vw,45px); margin-bottom:30px }
+    .eyebrow { color:var(--light); font-size:12px; font-weight:bold; letter-spacing:2px }
+    .hero h2 { font-size:clamp(32px,6vw,54px); line-height:1.1; margin:10px 0 }
+    .hero p { max-width:700px; color:var(--muted) }
+    .blue { color:var(--light) }
+    .row { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap }
+    .button {
+      display:inline-flex; align-items:center; justify-content:center; gap:7px;
+      border:1px solid transparent; border-radius:10px; padding:10px 14px;
+      background:linear-gradient(135deg,#087bff,#1455d9); color:white;
+      font-weight:bold; cursor:pointer; text-decoration:none;
+    }
+    .button.secondary { background:#14253c; border-color:#355174 }
+    .button.danger { background:#451b27; border-color:#773443 }
+    .button:disabled { opacity:.5; cursor:not-allowed }
+    .small { padding:7px 10px; font-size:13px }
+    .section { margin:30px 0 }
+    .section-head { margin-bottom:15px }
+    .section-head p { color:var(--muted); margin:4px 0 }
+    input,textarea,select {
+      width:100%; padding:12px; border-radius:10px; border:1px solid #304563;
+      background:#080f1c; color:var(--text); font:inherit;
+    }
+    input:focus,textarea:focus,select:focus { outline:2px solid #087bff70 }
+    label { display:block; margin:12px 0 6px; font-size:14px; font-weight:bold }
+    .search { max-width:330px }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px }
+    .app-card { padding:17px; overflow-wrap:anywhere }
+    .app-card h3 { margin-bottom:4px }
+    .app-icon { font-size:26px; margin-bottom:7px }
+    .description { color:#c0cfe3; white-space:pre-wrap }
+    .pill {
+      display:inline-block; padding:3px 9px; border-radius:99px;
+      background:#142943; color:#cbe4ff; font-size:12px; margin:2px 4px 8px 0;
+    }
+    .approved { color:#9cf0c9; background:#103025 }
+    .pending { color:#ffe1a0; background:#302611 }
+    .rejected { color:#ffb8c0; background:#34151e }
+    .panel { padding:20px }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px }
+    .full { grid-column:1/-1 }
+    .notice { padding:12px; border-radius:10px; background:#10233a; border:1px solid #2d4b6d; margin-top:12px; overflow-wrap:anywhere }
+    .error { color:#ffd7dc; background:#32151d; border-color:#783440 }
+    .success { color:#bff7dc; background:#102a20; border-color:#28684c }
+    .hidden { display:none !important }
+    .empty { padding:25px; border:1px dashed #304563; border-radius:12px; color:var(--muted); text-align:center; grid-column:1/-1 }
+    .review { border-bottom:1px solid var(--border); padding:12px 0 }
+    .review:last-child { border:0 }
+    .stars { display:flex; gap:4px; margin:5px 0 12px }
+    .star { background:none; border:0; color:#64758e; font-size:28px; cursor:pointer }
+    .star.selected { color:#ffd166 }
+    .admin-row { display:flex; justify-content:space-between; gap:12px; padding:13px 0; border-bottom:1px solid var(--border); flex-wrap:wrap }
+    footer { border-top:1px solid var(--border); padding:20px 0; color:var(--muted); font-size:13px }
+    @media(max-width:800px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)) } }
+    @media(max-width:560px) {
+      .grid,.form-grid { grid-template-columns:1fr }
+      .full { grid-column:auto }
+      .search { max-width:none }
+      .hero h2 { font-size:34px }
+      .nav { align-items:flex-start }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <div class="brand">
+      <div class="logo">🦂</div>
+      <div>
+        <h1>Scorpio Octavious Vibe</h1>
+        <p>SOV Develop Hub</p>
+      </div>
+    </div>
+    <div class="row">
+      <span class="muted" id="apiStatus">Checking API…</span>
+      <div id="googleButton"></div>
+      <div id="account" class="hidden row">
+        <span id="userName"></span>
+        <button class="button secondary small" id="signOut">Sign out</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">DISCOVER · BUILD · SHARE</div>
+    <h2>Welcome to<br><span class="blue">SOV Develop Hub</span></h2>
+    <p>Discover Android apps in the Scorpio Octavious Vibe ecosystem. Browse approved apps, download available releases, and share ratings and reviews.</p>
+    <a class="button" href="#marketplace">Explore apps</a>
+    <a class="button secondary" href="#submit">Submit an app</a>
+  </section>
+
+  <section class="section" id="marketplace">
+    <div class="section-head row">
+      <div><h2>App marketplace</h2><p>Browse and search available app listings.</p></div>
+      <div class="row">
+        <input class="search" id="search" type="search" placeholder="Search apps…" aria-label="Search apps">
+        <button class="button secondary" id="refresh">Refresh</button>
+      </div>
+    </div>
+    <div class="grid" id="apps"><div class="empty">Loading apps…</div></div>
+    <div id="marketNotice" class="notice" role="status"></div>
+  </section>
+
+  <section class="section" id="submit">
+    <div class="section-head">
+      <h2>Submit an Android app</h2>
+      <p>Only the verified admin account can publish submissions.</p>
+    </div>
+    <div class="panel">
+      <div id="locked" class="notice">Sign in with the authorised Google admin account to access APK submission.</div>
+      <form id="uploadForm" class="hidden">
+        <div class="form-grid">
+          <div><label for="appName">App name *</label><input id="appName" required maxlength="80"></div>
+          <div><label for="appVersion">Version *</label><input id="appVersion" required maxlength="30" placeholder="1.0.0"></div>
+          <div class="full"><label for="appDescription">Description *</label><textarea id="appDescription" rows="4" maxlength="3000" required></textarea></div>
+          <div class="full">
+            <label for="apk">APK file *</label>
+            <input id="apk" type="file" accept=".apk,application/vnd.android.package-archive" required>
+            <p class="muted">The server must enforce file-size limits and validate APK uploads. Never upload private signing keys.</p>
+          </div>
+        </div>
+        <p><button class="button" id="uploadButton">Submit for approval</button></p>
+      </form>
+      <div id="uploadNotice" class="notice hidden" role="status"></div>
+    </div>
+  </section>
+
+  <section class="section hidden" id="adminSection">
+    <div class="section-head row">
+      <div><h2>Admin approval queue</h2><p>Approve or reject submitted apps.</p></div>
+      <button class="button secondary" id="refreshQueue">Refresh queue</button>
+    </div>
+    <div class="panel">
+      <div id="queue"><p class="muted">No queue loaded.</p></div>
+      <div id="adminNotice" class="notice hidden" role="status"></div>
+    </div>
+  </section>
+
+  <section class="section hidden" id="reviewSection">
+    <div class="section-head row">
+      <div><h2 id="reviewHeading">App reviews</h2><p>Rate an app from one to five stars.</p></div>
+      <button class="button secondary" id="closeReviews">Close</button>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))">
+      <div class="panel">
+        <h3>Write a review</h3>
+        <form id="reviewForm">
+          <label>Your rating *</label>
+          <div class="stars" id="starPicker" aria-label="Choose rating">
+            <button class="star selected" type="button" data-rating="1" aria-label="1 star">★</button>
+            <button class="star selected" type="button" data-rating="2" aria-label="2 stars">★</button>
+            <button class="star selected" type="button" data-rating="3" aria-label="3 stars">★</button>
+            <button class="star selected" type="button" data-rating="4" aria-label="4 stars">★</button>
+            <button class="star selected" type="button" data-rating="5" aria-label="5 stars">★</button>
+          </div>
+          <label for="reviewComment">Comment *</label>
+          <textarea id="reviewComment" rows="4" maxlength="1500" required placeholder="Share helpful feedback…"></textarea>
+          <p><button class="button" id="postReview">Post review</button></p>
+        </form>
+        <div id="reviewNotice" class="notice hidden" role="status"></div>
+      </div>
+      <div class="panel">
+        <h3>Community reviews</h3>
+        <div id="reviewsList"><p class="muted">Choose an app to see reviews.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  <strong>Scorpio Octavious Vibe · SOV Develop Hub</strong>
+  <p>Install APKs only from sources you trust. Review app permissions before installing. Server-side upload security, approval, and review endpoints are required for these features to operate.</p>
+</div></footer>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+"use strict";
+
+// This is the separate Develop Hub API. Do not replace it with the SOV Lite API.
+const API_BASE_URL = "https://scorpio-octavious-vibe-develop-hub-api-ii.onrender.com";
+const GOOGLE_CLIENT_ID = "563455067838-tmkg3uj8re1nsek6tfsc1e9dvsm6gtqt.apps.googleusercontent.com";
+
+const $ = id => document.getElementById(id);
+let idToken = null;
+let user = null;
+let appList = [];
+let activeAppId = null;
+let activeAppName = "";
+let rating = 5;
+
+function safe(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[c]);
+}
+function notice(id, message, kind = "") {
+  $(id).textContent = message;
+  $(id).className = "notice" + (kind ? " " + kind : "");
+  $(id).classList.remove("hidden");
+}
+function api(path) { return API_BASE_URL.replace(/\/+$/, "") + path; }
+
+async function request(path, options = {}) {
+  const headers = new Headers(options.headers || {});
+  if (idToken) headers.set("Authorization", "Bearer " + idToken);
+  if (options.body && !(options.body instanceof FormData) && !headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
+  const response = await fetch(api(path), {...options, headers});
+  const raw = await response.text();
+  let data;
+  try { data = raw ? JSON.parse(raw) : {}; }
+  catch { throw new Error("Server returned a non-JSON response (HTTP " + response.status + ")."); }
+  if (!response.ok) throw new Error(data.error || data.message || "Request failed: HTTP " + response.status);
+  return data;
+}
+
+async function checkAPI() {
+  try {
+    await request("/health");
+    $("apiStatus").textContent = "● API online";
+    $("apiStatus").style.color = "var(--green)";
+  } catch (error) {
+    $("apiStatus").textContent = "● API unavailable";
+    $("apiStatus").style.color = "var(--red)";
+    notice("marketNotice", error.message, "error");
+  }
+}
+
+function initGoogle() {
+  if (!window.google?.accounts?.id) { setTimeout(initGoogle, 250); return; }
+  google.accounts.id.initialize({
+    client_id: GOOGLE_CLIENT_ID,
+    callback: async response => {
+      idToken = response.credential;
+      try {
+        const data = await request("/api/me");
+        user = data.user || data;
+        if (data.email && !user.email) user.email = data.email;
+        $("googleButton").classList.add("hidden");
+        $("account").classList.remove("hidden");
+        $("userName").textContent = user.name || user.email || "Signed in";
+        const admin = user.is_admin === true;
+        $("locked").classList.toggle("hidden", admin);
+        $("uploadForm").classList.toggle("hidden", !admin);
+        $("adminSection").classList.toggle("hidden", !admin);
+        notice("marketNotice", "Google account verified.", "success");
+        if (admin) loadQueue();
+      } catch (error) {
+        idToken = null; user = null;
+        notice("marketNotice", "Sign-in verification failed: " + error.message, "error");
+      }
+    }
+  });
+  google.accounts.id.renderButton($("googleButton"), {
+    theme:"filled_black", size:"large", shape:"pill",
+    text:"continue_with", width:220
+  });
+}
+
+$("signOut").addEventListener("click", () => {
+  if (window.google?.accounts?.id) google.accounts.id.disableAutoSelect();
+  idToken = null; user = null;
+  $("account").classList.add("hidden");
+  $("googleButton").classList.remove("hidden");
+  $("locked").classList.remove("hidden");
+  $("uploadForm").classList.add("hidden");
+  $("adminSection").classList.add("hidden");
+  notice("marketNotice", "Signed out.", "success");
+});
+
+function getId(app) { return app.id ?? app.app_id ?? app._id ?? ""; }
+
+async function loadApps() {
+  $("apps").innerHTML = '<div class="empty">Loading apps…</div>';
+  try {
+    const data = await request("/api/apps");
+    appList = Array.isArray(data) ? data : (data.apps || []);
+    renderApps();
+    if (!appList.length) notice("marketNotice", data.message || "No approved apps are listed yet.");
+  } catch (error) {
+    appList = [];
+    renderApps();
+    notice("marketNotice", "Marketplace could not load: " + error.message, "error");
+  }
+}
+
+function renderApps() {
+  const term = $("search").value.trim().toLowerCase();
+  const filtered = appList.filter(a =>
+    [a.name, a.title, a.description, a.version].join(" ").toLowerCase().includes(term)
+  );
+  if (!filtered.length) {
+    $("apps").innerHTML = '<div class="empty">No apps found. Try another search or refresh.</div>';
+    return;
+  }
+  $("apps").innerHTML = filtered.map(a => {
+    const id = getId(a);
+    const name = a.name || a.title || "Unnamed app";
+    const status = String(a.status || "approved").toLowerCase();
+    const download = a.download_url || a.apk_url || "";
+    const approved = status === "approved";
+    const ratingValue = Number(a.average_rating ?? a.rating ?? 0);
+    const count = Number(a.review_count ?? 0);
+    return `<article class="app-card">
+      <div class="app-icon">📱</div>
+      <h3>${safe(name)}</h3>
+      <p class="muted">${safe(a.version || "Version unspecified")}</p>
+      <span class="pill ${safe(status)}">${safe(status)}</span>
+      <p class="description">${safe(a.description || "No description provided.")}</p>
+      <p class="muted">★ ${ratingValue ? ratingValue.toFixed(1) : "No ratings"} · ${count} review(s)</p>
+      <div class="row">
+        ${approved && download
+          ? `<a class="button small" href="${safe(download)}" target="_blank" rel="noopener noreferrer">Download APK</a>`
+          : `<button class="button secondary small" disabled>${approved ? "Download unavailable" : "Not available"}</button>`}
+        <button class="button secondary small reviewOpen" data-id="${safe(id)}" data-name="${safe(name)}">Reviews & rate</button>
+      </div>
+    </article>`;
+  }).join("");
+  document.querySelectorAll(".reviewOpen").forEach(b =>
+    b.addEventListener("click", () => openReviews(b.dataset.id, b.dataset.name))
+  );
+}
+
+$("search").addEventListener("input", renderApps);
+$("refresh").addEventListener("click", loadApps);
+
+$("uploadForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!user || user.is_admin !== true || !idToken) {
+    notice("uploadNotice", "Verified admin access is required.", "error"); return;
+  }
+  const file = $("apk").files[0];
+  if (!file || !file.name.toLowerCase().endsWith(".apk")) {
+    notice("uploadNotice", "Please select a valid .apk file.", "error"); return;
+  }
+  const form = new FormData();
+  form.append("name", $("appName").value.trim());
+  form.append("version", $("appVersion").value.trim());
+  form.append("description", $("appDescription").value.trim());
+  form.append("apk", file);
+  $("uploadButton").disabled = true;
+  try {
+    const result = await request("/api/admin/apps", {method:"POST", body:form});
+    notice("uploadNotice", result.message || "Submission received for review.", "success");
+    $("uploadForm").reset();
+    await loadApps(); await loadQueue();
+  } catch (error) {
+    notice("uploadNotice", "Upload failed: " + error.message + ". The backend upload endpoint must be implemented.", "error");
+  } finally { $("uploadButton").disabled = false; }
+});
+
+async function loadQueue() {
+  if (user?.is_admin !== true) return;
+  $("queue").innerHTML = '<p class="muted">Loading queue…</p>';
+  try {
+    const data = await request("/api/admin/apps/pending");
+    const items = Array.isArray(data) ? data : (data.apps || []);
+    if (!items.length) {
+      $("queue").innerHTML = '<div class="empty">No pending submissions found.</div>'; return;
+    }
+    $("queue").innerHTML = items.map(a => `
+      <div class="admin-row">
+        <div><strong>${safe(a.name || a.title || "Unnamed app")}</strong>
+          <div class="muted">${safe(a.version || "")} · ${safe(a.description || "")}</div>
+        </div>
+        <div class="row">
+          <button class="button small approve" data-id="${safe(getId(a))}" data-action="approve">Approve</button>
+          <button class="button danger small approve" data-id="${safe(getId(a))}" data-action="reject">Reject</button>
+        </div>
+      </div>`).join("");
+    document.querySelectorAll(".approve").forEach(b => b.addEventListener("click", () => moderate(b.dataset.id, b.dataset.action)));
+  } catch (error) {
+    $("queue").innerHTML = '<div class="notice error">Approval queue unavailable: ' + safe(error.message) + '. Implement the backend endpoint to enable this feature.</div>';
+  }
+}
+$("refreshQueue").addEventListener("click", loadQueue);
+
+async function moderate(id, action) {
+  if (!id || !confirm(action === "approve" ? "Approve this app?" : "Reject this app?")) return;
+  try {
+    const result = await request("/api/admin/apps/" + encodeURIComponent(id) + "/" + action, {
+      method:"POST", body:JSON.stringify({})
+    });
+    notice("adminNotice", result.message || "App status updated.", "success");
+    await loadQueue(); await loadApps();
+  } catch (error) {
+    notice("adminNotice", "Could not update app: " + error.message + ". Backend moderation endpoint required.", "error");
+  }
+}
+
+async function openReviews(id, name) {
+  if (!id) { notice("marketNotice", "This app listing has no ID for reviews.", "error"); return; }
+  activeAppId = id; activeAppName = name;
+  $("reviewHeading").textContent = "Reviews: " + name;
+  $("reviewSection").classList.remove("hidden");
+  $("reviewSection").scrollIntoView({behavior:"smooth", block:"start"});
+  $("reviewsList").innerHTML = '<p class="muted">Loading reviews…</p>';
+  try {
+    const data = await request("/api/apps/" + encodeURIComponent(id) + "/reviews");
+    const reviews = Array.isArray(data) ? data : (data.reviews || []);
+    if (!reviews.length) {
+      $("reviewsList").innerHTML = '<p class="muted">No reviews yet. Be the first to review this app.</p>';
+    } else {
+      $("reviewsList").innerHTML = reviews.map(r => {
+        const stars = Math.max(0, Math.min(5, Number(r.rating || 0)));
+        return `<div class="review"><strong>${safe(r.user_name || r.name || r.email || "SOV user")}</strong>
+          <span style="color:#ffd166">${"★".repeat(stars)}${"☆".repeat(5-stars)}</span>
+          <p>${safe(r.comment || r.text || "")}</p><small class="muted">${safe(r.created_at || "")}</small></div>`;
+      }).join("");
+    }
+  } catch (error) {
+    $("reviewsList").innerHTML = '<div class="notice error">Reviews unavailable: ' + safe(error.message) + '. Backend review endpoint required.</div>';
+  }
+}
+$("closeReviews").addEventListener("click", () => $("reviewSection").classList.add("hidden"));
+
+function setRating(value) {
+  rating = value;
+  document.querySelectorAll(".star").forEach(b => b.classList.toggle("selected", Number(b.dataset.rating) <= value));
+}
+document.querySelectorAll(".star").forEach(b => b.addEventListener("click", () => setRating(Number(b.dataset.rating))));
+
+$("reviewForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!idToken || !user) { notice("reviewNotice", "Sign in with Google before posting a review.", "error"); return; }
+  const comment = $("reviewComment").value.trim();
+  if (!activeAppId || !comment) { notice("reviewNotice", "Choose an app and write a comment.", "error"); return; }
+  $("postReview").disabled = true;
+  try {
+    const result = await request("/api/apps/" + encodeURIComponent(activeAppId) + "/reviews", {
+      method:"POST", body:JSON.stringify({rating, comment})
+    });
+    notice("reviewNotice", result.message || "Review submitted.", "success");
+    $("reviewComment").value = "";
+    await openReviews(activeAppId, activeAppName);
+    await loadApps();
+  } catch (error) {
+    notice("reviewNotice", "Could not post review: " + error.message + ". Backend review endpoint required.", "error");
+  } finally { $("postReview").disabled = false; }
+});
+
+setRating(5);
+checkAPI();
+loadApps();
+initGoogle();
+</script>
+</body>
+</html>
