@@ -32,7 +32,6 @@ UPLOAD_FOLDER.mkdir(parents=True, exist_ok=True)
 FRONTEND_ORIGIN = os.environ.get("FRONTEND_ORIGIN", "").strip()
 allowed_origins = [FRONTEND_ORIGIN] if FRONTEND_ORIGIN else []
 
-
 CORS(
     app,
     resources={
@@ -42,8 +41,6 @@ CORS(
     allow_headers=["Content-Type", "Authorization"],
     methods=["GET", "POST", "OPTIONS"],
 )
-
-
 
 def utc_now():
     return datetime.now(timezone.utc).isoformat()
